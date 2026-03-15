@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sticky Timer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="drag-handle">☰</div>
+      <div class="title">Timers</div>
+      <button class="close-btn" id="close-btn" title="Close App">×</button>
+    </div>
+    <div class="timers-container-wrapper">
+      <div class="time-display-card" style="flex-grow: 1; padding: 0;">
+        <div class="timer-card no-hover"
+          style="flex-direction: row; justify-content: center; align-items: center; padding: 10px 15px;">
+          <div class="time-display" id="system-time" style="margin-bottom: 0; font-size: 28px;">00:00:00</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <button class="add-btn btn" id="add-btn" title="Add Timer"
+          style="width: 40px; height: 40px; border-radius: 50%;">
+          <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: currentColor;">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="timers-container" id="timers-container">
+      <!-- Timers will be dynamically injected here -->
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+
+</html>

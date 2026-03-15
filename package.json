@@ -1,0 +1,13 @@
+{
+  "name": "sticky-note-timer",
+  "version": "1.0.0",
+  "description": "A frameless, resizable, always-on-top sticky note timer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^28.2.0",
+    "electron-reloader": "^1.2.3"
+  }
+}
