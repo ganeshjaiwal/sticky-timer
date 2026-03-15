@@ -21,7 +21,7 @@
           <div class="time-display" id="system-time" style="margin-bottom: 0; font-size: 28px;">00:00:00</div>
         </div>
       </div>
-      <div style="display: flex; align-items: center; justify-content: center;">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
         <button class="add-btn btn" id="add-btn" title="Add Timer"
           style="width: 40px; height: 40px; border-radius: 50%;">
           <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: currentColor;">
@@ -31,9 +31,21 @@
       </div>
     </div>
 
-
-    <div class="timers-container" id="timers-container">
-      <!-- Timers will be dynamically injected here -->
+    <div class="main-content-area">
+      <div class="view-controls">
+        <button class="btn view-toggle-btn" id="view-toggle-btn" title="Toggle Grid/List View">
+          <!-- Icons will be injected by JS -->
+          <svg viewBox="0 0 24 24" id="view-icon" style="width: 20px; height: 20px; fill: currentColor;">
+            <rect x="3" y="3" width="8" height="8" rx="2" />
+            <rect x="13" y="3" width="8" height="8" rx="2" />
+            <rect x="3" y="13" width="8" height="8" rx="2" />
+            <rect x="13" y="13" width="8" height="8" rx="2" />
+          </svg>
+        </button>
+      </div>
+      <div class="timers-container" id="timers-container">
+        <!-- Timers will be dynamically injected here -->
+      </div>
     </div>
   </div>
   <script src="renderer.js"></script>

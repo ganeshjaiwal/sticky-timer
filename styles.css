@@ -77,11 +77,6 @@ body {
   -webkit-app-region: no-drag;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  font-size: 70px;
-  line-height: 1;
-  width: 90px;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,31 +94,35 @@ body {
 
 .remove-btn {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.4);
+  top: 6px;
+  right: 6px;
+  background: rgba(255, 118, 117, 0.1);
+  border: 1px solid rgba(255, 118, 117, 0.2);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-size: 16px;
-  line-height: 1;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-app-region: no-drag;
-  transition: color 0.2s;
+  transition: all 0.2s ease;
+  z-index: 5;
 }
 
 .remove-btn:disabled {
-  opacity: 0.1 !important;
-  cursor: default;
-  pointer-events: none;
+  display: none; /* Hide instead of disable for cleaner UI when not removable */
 }
 
 .remove-btn svg {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
 }
 
 .remove-btn:hover {
-  color: #ff7675;
+  background: rgba(255, 118, 117, 0.4);
+  color: #fff;
+  transform: scale(1.1);
 }
 
 .close-btn {
@@ -141,9 +140,34 @@ body {
   color: #ff5f56;
 }
 
+.main-content-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.view-controls {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.view-toggle-btn {
+  pointer-events: auto;
+  width: 32px !important;
+  height: 32px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .timers-container {
   flex-grow: 1;
-  padding: 12px;
+  padding: 50px 12px 12px 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -156,6 +180,53 @@ body {
   );
   backdrop-filter: blur(40px) saturate(200%);
   -webkit-backdrop-filter: blur(40px) saturate(200%);
+  transition: all 0.3s ease;
+}
+
+.timers-container.grid-view {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-content: start;
+}
+
+/* Adjust card size in grid for better fit and prevent overlap */
+.grid-view .timer-card {
+  padding: 20px 5px 10px 5px; /* Increased top padding to avoid remove-btn overlap */
+}
+
+.grid-view .remove-btn {
+  top: 4px;
+  right: 4px;
+  padding: 2px;
+}
+
+.grid-view .remove-btn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.grid-view .time-display {
+  font-size: 28px;
+}
+
+.grid-view .timer-label {
+  font-size: 10px;
+  margin-top: 0;
+  padding: 0 15px; /* Side padding to avoid corner buttons */
+}
+
+.grid-view .btn {
+  width: 28px;
+  height: 28px;
+}
+
+.grid-view .edit-inputs input,
+.grid-view .edit-inputs span {
+  font-size: 28px;
+}
+
+.grid-view .edit-inputs input {
+  width: 45px;
 }
 
 .time-display-card {
@@ -215,7 +286,6 @@ body {
 .timer-label {
   font-size: 12px;
   font-weight: 500;
-  margin-bottom: 8px;
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -348,10 +418,6 @@ body {
 .edit-inputs input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-.edit-panel {
-  display: none; /* Removing legacy edit panel reference */
 }
 
 /* Scrollbar styling for a cleaner look */

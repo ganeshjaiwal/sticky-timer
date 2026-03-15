@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
 
 try {
   require('electron-reloader')(module);
