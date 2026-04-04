@@ -1,8 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
 
-try {
-  require('electron-reloader')(module);
-} catch (_) {}
+// Only enable reloader in development
+if (!app.isPackaged) {
+  try {
+    require('electron-reloader')(module);
+  } catch (_) {}
+}
 
 let mainWindow;
 
@@ -17,13 +21,14 @@ function createWindow() {
     transparent: true,
     backgroundColor: '#00000000',
     resizable: true,
+    icon: path.join(__dirname, 'build/icon.png'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
     }
   });
 
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
 }
 
 app.whenReady().then(() => {

@@ -58,6 +58,11 @@ function syncRemoveButtons() {
     });
 }
 
+function saveTimersState() {
+    const timersData = Array.from(activeTimers).map(timer => timer.defaultTimeInSeconds);
+    localStorage.setItem('savedTimers', JSON.stringify(timersData));
+}
+
 // Descriptive Label Formatter
 function formatTimeLabel(totalSeconds) {
     if (totalSeconds <= 0) return "Zero Time Timer";
@@ -89,10 +94,10 @@ function formatTimeLabel(totalSeconds) {
 }
 
 class Timer {
-    constructor(defaultMinutes) {
+    constructor(defaultTimeInSeconds) {
         timerCounter++;
         this.id = timerCounter;
-        this.defaultTimeInSeconds = defaultMinutes * SECONDS_IN_MINUTE;
+        this.defaultTimeInSeconds = defaultTimeInSeconds;
         this.timeLeftInSeconds = this.defaultTimeInSeconds;
         this.intervalId = null;
         this.isRunning = false;
@@ -103,6 +108,7 @@ class Timer {
         this.updateDisplay();
         this.addEventListeners();
         syncRemoveButtons();
+        saveTimersState();
     }
 
     createDOM() {
@@ -210,6 +216,7 @@ class Timer {
         this.exitEditMode();
         this.updateLabel();
         this.updateDisplay();
+        saveTimersState();
     }
 
     exitEditMode() {
@@ -276,6 +283,7 @@ class Timer {
         this.container.remove();
         activeTimers.delete(this);
         syncRemoveButtons();
+        saveTimersState();
     }
 }
 
@@ -315,9 +323,25 @@ function playAlarm() {
     }
 }
 
-// Initialize default timers
-new Timer(DEFAULT_MAIN_TIMER_MINUTES);
-new Timer(DEFAULT_SECONDARY_TIMER_MINUTES);
+// Initialize default timers or load from storage
+const savedStr = localStorage.getItem('savedTimers');
+if (savedStr) {
+    try {
+        const saved = JSON.parse(savedStr);
+        if (Array.isArray(saved) && saved.length > 0) {
+            saved.forEach(sec => new Timer(sec));
+        } else {
+            new Timer(DEFAULT_MAIN_TIMER_MINUTES * SECONDS_IN_MINUTE);
+            new Timer(DEFAULT_SECONDARY_TIMER_MINUTES * SECONDS_IN_MINUTE);
+        }
+    } catch (e) {
+        new Timer(DEFAULT_MAIN_TIMER_MINUTES * SECONDS_IN_MINUTE);
+        new Timer(DEFAULT_SECONDARY_TIMER_MINUTES * SECONDS_IN_MINUTE);
+    }
+} else {
+    new Timer(DEFAULT_MAIN_TIMER_MINUTES * SECONDS_IN_MINUTE);
+    new Timer(DEFAULT_SECONDARY_TIMER_MINUTES * SECONDS_IN_MINUTE);
+}
 
 // System Time Updater
 function updateSystemTime() {
@@ -338,7 +362,7 @@ document.getElementById('close-btn').addEventListener('click', () => {
 });
 
 document.getElementById('add-btn').addEventListener('click', () => {
-    new Timer(DEFAULT_NEW_TIMER_MINUTES); 
+    new Timer(DEFAULT_NEW_TIMER_MINUTES * SECONDS_IN_MINUTE); 
 });
 
 document.getElementById('view-toggle-btn').addEventListener('click', () => {

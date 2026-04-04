@@ -1,13 +1,52 @@
 {
   "name": "sticky-note-timer",
   "version": "1.0.0",
+  "author": "Ganesh",
   "description": "A frameless, resizable, always-on-top sticky note timer",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:all": "electron-builder --win --mac"
+  },
+  "build": {
+    "appId": "com.ganesh.sticky-timer",
+    "productName": "Sticky Timer",
+    "icon": "build/icon.png",
+    "directories": {
+      "output": "dist"
+    },
+    "npmRebuild": false,
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Sticky Timer"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "**/*",
+      "!dist",
+      "!node_modules",
+      "!.cache",
+      "!retry_build.log"
+    ]
   },
   "devDependencies": {
     "electron": "^28.2.0",
+    "electron-builder": "^26.8.1",
     "electron-reloader": "^1.2.3"
   }
 }
